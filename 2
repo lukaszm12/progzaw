@@ -1,0 +1,111 @@
+using System;
+
+// Interfejs Fabryki Abstrakcyjnej
+public interface IContainerFactory
+{
+    IContainer CreateContainer();
+    ILabel CreateLabel();
+}
+
+// Fabryka dla Szklanych Pojemników
+public class GlassContainerFactory : IContainerFactory
+{
+    public IContainer CreateContainer()
+    {
+        return new GlassContainer();
+    }
+
+    public ILabel CreateLabel()
+    {
+        return new GlassLabel();
+    }
+}
+
+// Fabryka dla Plastikowych Pojemników
+public class PlasticContainerFactory : IContainerFactory
+{
+    public IContainer CreateContainer()
+    {
+        return new PlasticContainer();
+    }
+
+    public ILabel CreateLabel()
+    {
+        return new PlasticLabel();
+    }
+}
+
+// Interfejs Pojemnika
+public interface IContainer
+{
+    string GetTypeOfContainer();
+}
+
+// Interfejs Etykiety
+public interface ILabel
+{
+    string GetLabelDetails();
+}
+
+// Implementacje dla Szklanych Pojemników
+public class GlassContainer : IContainer
+{
+    public string GetTypeOfContainer()
+    {
+        return "This is a glass container.";
+    }
+}
+
+public class GlassLabel : ILabel
+{
+    public string GetLabelDetails()
+    {
+        return "Label for glass container.";
+    }
+}
+
+// Implementacje dla Plastikowych Pojemników
+public class PlasticContainer : IContainer
+{
+    public string GetTypeOfContainer()
+    {
+        return "This is a plastic container.";
+    }
+}
+
+public class PlasticLabel : ILabel
+{
+    public string GetLabelDetails()
+    {
+        return "Label for plastic container.";
+    }
+}
+
+// Klient
+public class Client
+{
+    public void Main()
+    {
+        ClientMethod(new GlassContainerFactory());
+        ClientMethod(new PlasticContainerFactory());
+    }
+
+    public void ClientMethod(IContainerFactory factory)
+    {
+        var container = factory.CreateContainer();
+        var label = factory.CreateLabel();
+
+        Console.WriteLine(container.GetTypeOfContainer());
+        Console.WriteLine(label.GetLabelDetails());
+    }
+}
+
+// Program
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        new Client().Main();
+        Console.ReadLine();
+    }
+}
